@@ -3,8 +3,7 @@ import { Icon, Badge, Dropdown, Menu, Modal } from 'antd'
 import screenfull from 'screenfull'
 import {connect} from 'react-redux'
 import { Link, withRouter } from 'react-router-dom'
-import { isAuthenticated } from '../../utils/Session'
-import {getMsgs, ajaxLogout} from '../../routes/common/action'
+import {getMsgs, ajaxLogout, getUser} from '../../routes/common/action'
 
 class HeaderBar extends React.Component {
   state = {
@@ -14,6 +13,8 @@ class HeaderBar extends React.Component {
   }
 
   componentDidMount () {
+    this.props.getCount()
+    this.props.getUser()
     screenfull.onchange(() => {
       this.setState({
         icon: screenfull.isFullscreen ? 'shrink' : 'arrows-alt'
@@ -40,7 +41,7 @@ class HeaderBar extends React.Component {
 
   render () {
     const {icon, visible, avatar} = this.state
-    const {collapsed, location, count} = this.props
+    const {collapsed, location, count, user} = this.props
     const notLogin = (
       <div>
         <Link to={{pathname: '/login', state: {from: location}}} style={{color: 'rgba(0, 0, 0, 0.65)'}}>登录</Link>&nbsp;
@@ -50,7 +51,7 @@ class HeaderBar extends React.Component {
     const menu = (
       <Menu className='menu'>
         <Menu.ItemGroup title='用户中心' className='menu-group'>
-          <Menu.Item>你好 - {isAuthenticated()}</Menu.Item>
+          <Menu.Item>你好 - {user.nickName}</Menu.Item>
           <Menu.Item>个人信息</Menu.Item>
           <Menu.Item><span onClick={this.logout}>退出登录</span></Menu.Item>
         </Menu.ItemGroup>
@@ -99,13 +100,16 @@ class HeaderBar extends React.Component {
 const mapStateToProps = (state) => {
     console.log(state)
     return ({
-    count: state.common.count,
-    isLogin: state.common.isLogin
-})}
+      count: state.common.count,
+      isLogin: state.common.isLogin,
+      user:state.common.user
+    })
+}
 
-const mapDispatchToProps = (dispatch) => ({
+const mapDispatchToProps = (dispatch, ownProps) => ({
     logout : () => dispatch(ajaxLogout()),
-    getCount: (userId) => dispatch(getMsgs(userId))
+    getCount: () => dispatch(getMsgs()),
+    getUser: () => dispatch(getUser())
 })
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(HeaderBar))

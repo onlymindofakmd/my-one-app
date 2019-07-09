@@ -18,13 +18,17 @@ class SiderNav extends React.Component {
     }
 }
 
-const mapStateToProps = (state) => ({
-    menus : state.common.menus
-})
+const mapStateToProps = (state) => {
+    return ({
+        menus : state.common.menus
+    })
+}
 
-const mapDispatchToProps = (dispatch) => ({
-    initMenu : (userId) => dispatch(initMenu(userId))
-})
+const mapDispatchToProps = (dispatch, ownProps) => {
+    return ({
+        initMenu : (token) => dispatch(initMenu(token))
+    })
+}
 
 const styles = {
     logo: {

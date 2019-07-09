@@ -25,6 +25,7 @@ class LoginForm extends React.Component {
     componentDidUpdate(){
         const isLogin = this.props.isLogin
         if(isLogin){
+            alert(isLogin);
             const {from} = this.props.location.state || {from: {pathname: '/'}}
             this.props.history.push(from)
         }
@@ -112,7 +113,7 @@ class LoginForm extends React.Component {
                     <Input
                     onFocus={() => this.setState({focusItem: 0})}
                     onBlur={() => this.setState({focusItem: -1})}
-                    maxLength={16}
+                    maxLength={30}
                     placeholder='用户名'
                     addonBefore={<span className='iconfont icon-User' style={focusItem === 0 ? styles.focus : {}}/>}/>
                 )}
@@ -183,10 +184,12 @@ const styles = {
     },
 }
 
-const mapStateToProps = (state) => ({
-    isLogin : state.common.isLogin,
-    msg : state.login.msg
-})
+const mapStateToProps = (state) => {
+    return ({
+        isLogin : state.common.isLogin,
+        msg : state.login.msg
+    })
+}
 
 const mapDispatchProps =  (dispatch) => ({
     ajaxLogin : (values,func) => dispatch(ajaxLogin(values,func))

@@ -8,6 +8,7 @@ export const LOGINSUCCESS = 'LOGINSUCCESS'
 export const LOGINFAIL = 'LOGINFAIL'
 export const MSGCOUNT = 'MSGCOUNT'
 export const MENUS = 'MENUS'
+export const USER =  "USER"
 
 //system
 export const SYSTEMSUCCESS = 'SYSTEMSUCCESS'
