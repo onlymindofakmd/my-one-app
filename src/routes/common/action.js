@@ -1,5 +1,5 @@
 import {LOGINSUCCESS, LOGINFAIL, MSGCOUNT, MENUS, USER} from '../../utils/actionTypes'
-import {authenticateSuccess} from '../../utils/Session';
+import {authenticateSuccess, getRefresh} from '../../utils/Session';
 import {menus} from '../../utils/vRemote'
 import {request} from '../../axios/api'
 
@@ -38,6 +38,18 @@ export const initMenu = () => {
             return dispatch({type: MENUS, data:menus})
         })
     }
+}
+
+const refreshToken = () => {
+    let params = {
+        grant_type: "refresh_token",
+        refresh_token:getRefresh()
+    }
+    request("post", "/oauth/token",params).then(res => {
+        authenticateSuccess(res.access_token)
+    }).catch(err => {
+
+    })
 }
 
 export function ajaxLogin(values,func){

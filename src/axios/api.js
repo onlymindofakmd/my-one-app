@@ -37,7 +37,9 @@ const get = (url, params) => {
 
 const post = (url, params) => {
     return new Promise((resolve, reject) => {
-        params = Object.assign({}, params, {access_token:isAuthenticated()})
+        if(url.indexOf("register")===-1){
+            params = Object.assign({}, params, {access_token:isAuthenticated()})
+        }
         axios({
             url:url,
             method:"post",

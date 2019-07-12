@@ -1,7 +1,8 @@
 import React from 'react'
 import{Switch, withRouter} from 'react-router-dom'
 import Hello from '../hello';
-import System from '../../routes/System'
+import MessageCenter from '../../routes/MessageCenter'
+import UserInfo from '../../routes/user/UserInfo'
 import PrivateRoute from '../PrivateRoute';
 
 class ContentMain extends React.Component {
@@ -10,8 +11,8 @@ class ContentMain extends React.Component {
             <div style={{padding: 16, position: 'relative'}}>
                 <Switch>
                     <PrivateRoute exact path="/" component={Hello}/>
-                    <PrivateRoute exact path="/home/back" component={System}/>
-                    <PrivateRoute exact path="/home/userinfo" component={User}/>
+                    <PrivateRoute exact path="/home/back" component={MessageCenter}/>
+                    <PrivateRoute exact path="/home/userinfo" component={UserInfo}/>
                 </Switch>
             </div>
         )
